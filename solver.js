@@ -13,6 +13,7 @@ function getDimensions(puzzle) {
     return [puzzle.length, puzzle[0].length];
 }
 function makeGrid(puzzle) {
+    //! this is mostly done just need to figure out the breaking down of the inner lists stuff!!
     var _a = getDimensions(puzzle), rows = _a[0], cols = _a[1];
     var grid = {};
     for (var g = 0; g < rows; g += 3) {
@@ -28,8 +29,12 @@ function makeGrid(puzzle) {
             }
             nums.push(temp);
         }
-        var key = g + "-" + (g + 2);
-        grid[key] = nums;
+        for (var x = 0; x < nums.length; x++) {
+            var key = "" + (g + x);
+            grid[key] = nums[x];
+        }
+        // const key: string = `${g}-${g + 2}`;
+        // grid[key] = nums;
     }
     return grid;
 }

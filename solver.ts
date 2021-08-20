@@ -14,10 +14,9 @@ function getDimensions(puzzle: number[][]): [number, number] {
   return [puzzle.length, puzzle[0].length];
 }
 
-function makeGrid(puzzle: number[][]): { [key: string]: number[][] } {
-  //! this is mostly done just need to figure out the breaking down of the inner lists stuff!!
+function makeGrid(puzzle: number[][]): { [key: string]: number[] } {
   const [rows, cols] = getDimensions(puzzle);
-  const grid: { [key: string]: number[][] } = {};
+  const grid: { [key: string]: number[] } = {};
   for (let g = 0; g < rows; g += 3) {
     let nums: number[][] = [];
     for (let i: number = 0; i < cols; i += 3) {
@@ -31,8 +30,10 @@ function makeGrid(puzzle: number[][]): { [key: string]: number[][] } {
       }
       nums.push(temp);
     }
-    const key: string = `${g}-${g + 2}`;
-    grid[key] = nums;
+    for (let x = 0; x < nums.length; x++) {
+      const key: string = `${g + x}`;
+      grid[key] = nums[x];
+    }
   }
   return grid;
 }
