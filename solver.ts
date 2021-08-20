@@ -10,10 +10,18 @@ const puzzle: number[][] = [
   [4, null, null, null, 1, 6, null, null, 5],
 ];
 
+/**
+ * @param {number[][]} puzzle
+ * @returns {number[]} a list with the amount of rows and columns in the puzzle
+ */
 function getDimensions(puzzle: number[][]): [number, number] {
   return [puzzle.length, puzzle[0].length];
 }
 
+/**
+ * @param {number[][]} puzzle
+ * @returns {number[]} a obj with each 3x3 grid in arrays (key is the coord)
+ */
 function makeGrid(puzzle: number[][]): { [key: string]: number[] } {
   // need to find the dimensions of the puzzle
   const [rows, cols] = getDimensions(puzzle);
@@ -44,6 +52,11 @@ function makeGrid(puzzle: number[][]): { [key: string]: number[] } {
   return grid;
 }
 
+/**
+ * @param {number} col
+ * @param {number} row
+ * @returns {number} it returns the coordinate that the col and row are in
+ */
 function findCoord(col: number, row: number): number {
   // we need to know how many rows and columns there are
   let [rows, cols] = getDimensions(puzzle);
