@@ -18,15 +18,17 @@ function getDimensions(puzzle: number[][]): [number, number] {
   return [puzzle.length, puzzle[0].length];
 }
 
+type GridObj = { [key: string]: number[] };
+
 /**
  * @param {number[][]} puzzle
- * @returns {number[]} a obj with each 3x3 grid in arrays (key is the coord)
+ * @returns {GridObj} a obj with each 3x3 grid in arrays (key is the coord)
  */
-function makeGrid(puzzle: number[][]): { [key: string]: number[] } {
+function makeGrid(puzzle: number[][]): GridObj {
   // need to find the dimensions of the puzzle
   const [rows, cols] = getDimensions(puzzle);
   // each grid is a array with the key being its coordinate
-  const grid: { [key: string]: number[] } = {};
+  const grid: GridObj = {};
   // iterate through the rows
   for (let g = 0; g < rows; g += 3) {
     // this arr is used to keep arrs of a rows grids
