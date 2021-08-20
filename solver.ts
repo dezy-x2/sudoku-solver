@@ -45,11 +45,15 @@ function makeGrid(puzzle: number[][]): { [key: string]: number[] } {
 }
 
 function findCoord(col: number, row: number): number {
+  // we need to know how many rows and columns there are
   let [rows, cols] = getDimensions(puzzle);
+  // since each grid is 3x3 dividing the rows and columns by 3 gives us the grid num
   rows /= 3;
   cols /= 3;
+  // this tells us how far over and down the coords are from 0,0
   const over = Math.floor(col / cols);
   const down = Math.floor(row / rows);
+  // multiplying down by 3 moves us to the correct row and adding over gives us the correct col
   const num: number = down * 3 + over;
   return num;
 }
