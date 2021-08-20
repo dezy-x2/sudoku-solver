@@ -5,8 +5,11 @@ var puzzle = [
     [null, 9, null, null, null, null, 7, null, null],
     [null, null, 7, 9, 6, 5, 8, null, null],
     [null, null, 2, null, null, null, null, 4, null],
-    [null, null, 2, null, null, null, null, 4, null],
     [null, null, null, null, 5, 3, null, 6, null],
     [null, 5, 1, null, 7, null, null, 2, 8],
     [4, null, null, null, 1, 6, null, null, 5],
 ];
+function getDimensions(puzzle) {
+    return [puzzle.length, puzzle[0].length];
+}
+console.log(getDimensions(puzzle));
