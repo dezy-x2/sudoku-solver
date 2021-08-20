@@ -12,4 +12,25 @@ var puzzle = [
 function getDimensions(puzzle) {
     return [puzzle.length, puzzle[0].length];
 }
-console.log(getDimensions(puzzle));
+function makeGrid(puzzle) {
+    var _a = getDimensions(puzzle), rows = _a[0], cols = _a[1];
+    var grid = {};
+    for (var g = 0; g < rows; g += 3) {
+        var nums = [];
+        for (var i = 0; i < cols; i += 3) {
+            console.log(g, i, "outer====");
+            var temp = [];
+            for (var j = g; j < g + 3; j++) {
+                for (var k = i; k < i + 3; k++) {
+                    console.log(j, k, "inner");
+                    temp.push(puzzle[j][k]);
+                }
+            }
+            nums.push(temp);
+        }
+        var key = g + "-" + (g + 2);
+        grid[key] = nums;
+    }
+    return grid;
+}
+console.log(makeGrid(puzzle));
