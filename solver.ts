@@ -44,4 +44,12 @@ function makeGrid(puzzle: number[][]): { [key: string]: number[] } {
   return grid;
 }
 
-console.log(makeGrid(puzzle));
+function findCoord(col: number, row: number): number {
+  let [rows, cols] = getDimensions(puzzle);
+  rows /= 3;
+  cols /= 3;
+  const over = Math.floor(col / cols);
+  const down = Math.floor(row / rows);
+  const num: number = down * 3 + over;
+  return num;
+}
