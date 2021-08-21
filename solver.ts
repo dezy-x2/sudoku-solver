@@ -72,3 +72,9 @@ function findCoord(col: number, row: number): number {
   const num: number = down * 3 + over;
   return num;
 }
+
+function getRowAndCol(col: number, row: number) {
+  const fullRow = puzzle[row];
+  const fullCol = puzzle.map((arr) => arr[col]);
+  return [fullCol, fullRow];
+}

@@ -9,9 +9,17 @@ var puzzle = [
     [null, 5, 1, null, 7, null, null, 2, 8],
     [4, null, null, null, 1, 6, null, null, 5],
 ];
+/**
+ * @param {number[][]} puzzle
+ * @returns {number[]} a list with the amount of rows and columns in the puzzle
+ */
 function getDimensions(puzzle) {
     return [puzzle.length, puzzle[0].length];
 }
+/**
+ * @param {number[][]} puzzle
+ * @returns {GridObj} a obj with each 3x3 grid in arrays (key is the coord)
+ */
 function makeGrid(puzzle) {
     // need to find the dimensions of the puzzle
     var _a = getDimensions(puzzle), rows = _a[0], cols = _a[1];
@@ -41,15 +49,26 @@ function makeGrid(puzzle) {
     }
     return grid;
 }
+/**
+ * @param {number} col
+ * @param {number} row
+ * @returns {number} it returns the coordinate that the col and row are in
+ */
 function findCoord(col, row) {
+    // we need to know how many rows and columns there are
     var _a = getDimensions(puzzle), rows = _a[0], cols = _a[1];
+    // since each grid is 3x3 dividing the rows and columns by 3 gives us the grid num
     rows /= 3;
     cols /= 3;
+    // this tells us how far over and down the coords are from 0,0
     var over = Math.floor(col / cols);
     var down = Math.floor(row / rows);
-    // console.log(`${over}-${down}`);
+    // multiplying down by 3 moves us to the correct row and adding over gives us the correct col
     var num = down * 3 + over;
     return num;
 }
-console.log(makeGrid(puzzle));
-console.log(findCoord(5, 2));
+function getRowAndCol(col, row) {
+    var fullRow = puzzle[row];
+    var fullCol = puzzle.map(function (arr) { return arr[col]; });
+    return [fullCol, fullRow];
+}
