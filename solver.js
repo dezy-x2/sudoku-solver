@@ -67,8 +67,34 @@ function findCoord(col, row) {
     var num = down * 3 + over;
     return num;
 }
+/**
+ * @param {number} col
+ * @param {number} row
+ * @returns {number[][]} it returns an arr of the row and column that the coords belong to
+ */
 function getRowAndCol(col, row) {
     var fullRow = puzzle[row];
     var fullCol = puzzle.map(function (arr) { return arr[col]; });
     return [fullCol, fullRow];
 }
+function numPresent(arr, num) {
+    for (var _i = 0, arr_1 = arr; _i < arr_1.length; _i++) {
+        var elm = arr_1[_i];
+        if (elm === num) {
+            return true;
+        }
+    }
+    return false;
+}
+function legalPlacement(col, row, num) {
+    var _a = getRowAndCol(col, row), fullCol = _a[0], fullRow = _a[1];
+    var grids = makeGrid(puzzle);
+    var coord = findCoord(col, row);
+    var grid = grids[coord];
+    console.log(!numPresent(fullCol, num), !numPresent(fullRow, num), !numPresent(grid, num));
+    console.log(fullRow, fullCol);
+    return (!numPresent(fullCol, num) &&
+        !numPresent(fullRow, num) &&
+        !numPresent(grid, num));
+}
+console.log(legalPlacement(1, 0, 8));

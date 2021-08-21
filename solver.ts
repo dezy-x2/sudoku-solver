@@ -83,3 +83,24 @@ function getRowAndCol(col: number, row: number): number[][] {
   const fullCol = puzzle.map((arr) => arr[col]);
   return [fullCol, fullRow];
 }
+
+function numPresent(arr: number[], num: number): boolean {
+  for (let elm of arr) {
+    if (elm === num) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function legalPlacement(col: number, row: number, num: number): boolean {
+  const [fullCol, fullRow] = getRowAndCol(col, row);
+  const grids: GridObj = makeGrid(puzzle);
+  const coord: number = findCoord(col, row);
+  const grid: number[] = grids[coord];
+  return (
+    !numPresent(fullCol, num) &&
+    !numPresent(fullRow, num) &&
+    !numPresent(grid, num)
+  );
+}
