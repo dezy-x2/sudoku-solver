@@ -73,6 +73,11 @@ function findCoord(col: number, row: number): number {
   return num;
 }
 
+/**
+ * @param {number} col
+ * @param {number} row
+ * @returns {number[][]} it returns an arr of the row and column that the coords belong to
+ */
 function getRowAndCol(col: number, row: number): number[][] {
   const fullRow = puzzle[row];
   const fullCol = puzzle.map((arr) => arr[col]);
