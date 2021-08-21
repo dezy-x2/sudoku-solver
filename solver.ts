@@ -73,7 +73,7 @@ function findCoord(col: number, row: number): number {
   return num;
 }
 
-function getRowAndCol(col: number, row: number) {
+function getRowAndCol(col: number, row: number): number[][] {
   const fullRow = puzzle[row];
   const fullCol = puzzle.map((arr) => arr[col]);
   return [fullCol, fullRow];
