@@ -84,6 +84,11 @@ function getRowAndCol(col: number, row: number): number[][] {
   return [fullCol, fullRow];
 }
 
+/**
+ * @param {number[]} arr
+ * @param {number} num
+ * @returns {boolean} it returns true if the num is in the arr
+ */
 function numPresent(arr: number[], num: number): boolean {
   for (let elm of arr) {
     if (elm === num) {
@@ -93,6 +98,12 @@ function numPresent(arr: number[], num: number): boolean {
   return false;
 }
 
+/**
+ * @param {number} col
+ * @param {number} row
+ * @param {number} num
+ * @returns {boolean} it returns true if a num can be placed in a specific spot
+ */
 function legalPlacement(col: number, row: number, num: number): boolean {
   const [fullCol, fullRow] = getRowAndCol(col, row);
   const grids: GridObj = makeGrid(puzzle);

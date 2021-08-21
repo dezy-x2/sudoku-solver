@@ -77,6 +77,11 @@ function getRowAndCol(col, row) {
     var fullCol = puzzle.map(function (arr) { return arr[col]; });
     return [fullCol, fullRow];
 }
+/**
+ * @param {number[]} arr
+ * @param {number} num
+ * @returns {boolean} it returns true if the num is in the arr
+ */
 function numPresent(arr, num) {
     for (var _i = 0, arr_1 = arr; _i < arr_1.length; _i++) {
         var elm = arr_1[_i];
@@ -86,15 +91,18 @@ function numPresent(arr, num) {
     }
     return false;
 }
+/**
+ * @param {number} col
+ * @param {number} row
+ * @param {number} num
+ * @returns {boolean} it returns true if a num can be placed in a specific spot
+ */
 function legalPlacement(col, row, num) {
     var _a = getRowAndCol(col, row), fullCol = _a[0], fullRow = _a[1];
     var grids = makeGrid(puzzle);
     var coord = findCoord(col, row);
     var grid = grids[coord];
-    console.log(!numPresent(fullCol, num), !numPresent(fullRow, num), !numPresent(grid, num));
-    console.log(fullRow, fullCol);
     return (!numPresent(fullCol, num) &&
         !numPresent(fullRow, num) &&
         !numPresent(grid, num));
 }
-console.log(legalPlacement(1, 0, 8));
