@@ -54,9 +54,10 @@ function makeGrid(puzzle) {
  * @param {number} row
  * @returns {number} it returns the coordinate that the col and row are in
  */
-function findCoord(col, row) {
+function findCoord(col, row, sudoku) {
+    if (sudoku === void 0) { sudoku = puzzle; }
     // we need to know how many rows and columns there are
-    var _a = getDimensions(puzzle), rows = _a[0], cols = _a[1];
+    var _a = getDimensions(sudoku), rows = _a[0], cols = _a[1];
     // since each grid is 3x3 dividing the rows and columns by 3 gives us the grid num
     rows /= 3;
     cols /= 3;
@@ -72,7 +73,8 @@ function findCoord(col, row) {
  * @param {number} row
  * @returns {number[][]} it returns an arr of the row and column that the coords belong to
  */
-function getRowAndCol(col, row) {
+function getRowAndCol(col, row, sudoku) {
+    if (sudoku === void 0) { sudoku = puzzle; }
     var fullRow = puzzle[row];
     var fullCol = puzzle.map(function (arr) { return arr[col]; });
     return [fullCol, fullRow];
@@ -97,12 +99,38 @@ function numPresent(arr, num) {
  * @param {number} num
  * @returns {boolean} it returns true if a num can be placed in a specific spot
  */
-function legalPlacement(col, row, num) {
+function legalPlacement(col, row, num, sudoku) {
+    if (sudoku === void 0) { sudoku = puzzle; }
     var _a = getRowAndCol(col, row), fullCol = _a[0], fullRow = _a[1];
-    var grids = makeGrid(puzzle);
+    var grids = makeGrid(sudoku);
     var coord = findCoord(col, row);
     var grid = grids[coord];
     return (!numPresent(fullCol, num) &&
         !numPresent(fullRow, num) &&
         !numPresent(grid, num));
+}
+function generateEmptyPuzzle(col, row) {
+    var final = [];
+    for (var i = 0; i < row; i++) {
+        var temp = [];
+        for (var j = 0; j < col; j++) {
+            temp.push(null);
+        }
+        final.push(temp);
+    }
+    return final;
+}
+function randomPlacer(depth) {
+    var sudoku = generateEmptyPuzzle(9, 9);
+    var _a = getDimensions(sudoku), row = _a[0], col = _a[1];
+    var rowToPlace = Math.floor(Math.random() * row);
+    var colToPlace = Math.floor(Math.random() * col);
+    for (var i = 1; i <= depth; i++) {
+        for (var _ = 0; _ < 9; i++) {
+            if (legalPlacement(colToPlace, rowToPlace, i)) {
+                sudoku[rowToPlace][colToPlace] = i;
+                break;
+            }
+        }
+    }
 }
