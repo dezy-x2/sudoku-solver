@@ -140,3 +140,18 @@ function generateEmptyPuzzle(col: number, row: number): number[][] {
   }
   return final;
 }
+
+function randomPlacer(depth: number): void {
+  const sudoku: number[][] = generateEmptyPuzzle(9, 9);
+  const [row, col] = getDimensions(sudoku);
+  const rowToPlace: number = Math.floor(Math.random() * row);
+  const colToPlace: number = Math.floor(Math.random() * col);
+  for (let i: number = 1; i <= depth; i++) {
+    for (let _: number = 0; _ < 9; i++) {
+      if (legalPlacement(colToPlace, rowToPlace, i)) {
+        sudoku[rowToPlace][colToPlace] = i;
+        break;
+      }
+    }
+  }
+}
