@@ -141,7 +141,7 @@ function generateEmptyPuzzle(col: number, row: number): number[][] {
   return final;
 }
 
-function randomPlacer(depth: number): void {
+function randomPlacer(depth: number): number[][] {
   const sudoku: number[][] = generateEmptyPuzzle(9, 9);
   const [row, col] = getDimensions(sudoku);
   const rowToPlace: number = Math.floor(Math.random() * row);
@@ -154,4 +154,5 @@ function randomPlacer(depth: number): void {
       }
     }
   }
+  return sudoku;
 }
