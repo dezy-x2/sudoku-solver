@@ -115,3 +115,15 @@ function legalPlacement(col: number, row: number, num: number): boolean {
     !numPresent(grid, num)
   );
 }
+
+function generateEmptyPuzzle(col: number, row: number): number[][] {
+  const final = [];
+  for (let i = 0; i < row; i++) {
+    const temp = [];
+    for (let j = 0; j < col; j++) {
+      temp.push(null);
+    }
+    final.push(temp);
+  }
+  return final;
+}
