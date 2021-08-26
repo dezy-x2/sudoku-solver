@@ -59,9 +59,13 @@ function makeGrid(puzzle: number[][]): GridObj {
  * @param {number} row
  * @returns {number} it returns the coordinate that the col and row are in
  */
-function findCoord(col: number, row: number): number {
+function findCoord(
+  col: number,
+  row: number,
+  sudoku: number[][] = puzzle
+): number {
   // we need to know how many rows and columns there are
-  let [rows, cols] = getDimensions(puzzle);
+  let [rows, cols] = getDimensions(sudoku);
   // since each grid is 3x3 dividing the rows and columns by 3 gives us the grid num
   rows /= 3;
   cols /= 3;
@@ -78,7 +82,11 @@ function findCoord(col: number, row: number): number {
  * @param {number} row
  * @returns {number[][]} it returns an arr of the row and column that the coords belong to
  */
-function getRowAndCol(col: number, row: number): number[][] {
+function getRowAndCol(
+  col: number,
+  row: number,
+  sudoku: number[][] = puzzle
+): number[][] {
   const fullRow = puzzle[row];
   const fullCol = puzzle.map((arr) => arr[col]);
   return [fullCol, fullRow];
@@ -104,9 +112,14 @@ function numPresent(arr: number[], num: number): boolean {
  * @param {number} num
  * @returns {boolean} it returns true if a num can be placed in a specific spot
  */
-function legalPlacement(col: number, row: number, num: number): boolean {
+function legalPlacement(
+  col: number,
+  row: number,
+  num: number,
+  sudoku: number[][] = puzzle
+): boolean {
   const [fullCol, fullRow] = getRowAndCol(col, row);
-  const grids: GridObj = makeGrid(puzzle);
+  const grids: GridObj = makeGrid(sudoku);
   const coord: number = findCoord(col, row);
   const grid: number[] = grids[coord];
   return (
