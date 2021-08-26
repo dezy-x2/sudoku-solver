@@ -120,17 +120,19 @@ function generateEmptyPuzzle(col, row) {
     }
     return final;
 }
+//! theres definitely some errors here but im tired
 function randomPlacer(depth) {
     var sudoku = generateEmptyPuzzle(9, 9);
     var _a = getDimensions(sudoku), row = _a[0], col = _a[1];
-    var rowToPlace = Math.floor(Math.random() * row);
-    var colToPlace = Math.floor(Math.random() * col);
     for (var i = 1; i <= depth; i++) {
-        for (var _ = 0; _ < 9; i++) {
+        for (var _ = 0; _ < 9; _++) {
+            var rowToPlace = Math.floor(Math.random() * row);
+            var colToPlace = Math.floor(Math.random() * col);
             if (legalPlacement(colToPlace, rowToPlace, i)) {
                 sudoku[rowToPlace][colToPlace] = i;
-                break;
             }
         }
     }
+    return sudoku;
 }
+console.log(randomPlacer(1));
