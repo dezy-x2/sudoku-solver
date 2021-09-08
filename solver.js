@@ -85,6 +85,7 @@ function getRowAndCol(col, row, sudoku) {
  * @returns {boolean} it returns true if the num is in the arr
  */
 function numPresent(arr, num) {
+    return arr.includes(num);
     for (var _i = 0, arr_1 = arr; _i < arr_1.length; _i++) {
         var elm = arr_1[_i];
         if (elm === num) {
@@ -124,15 +125,18 @@ function generateEmptyPuzzle(col, row) {
 function randomPlacer(depth) {
     var sudoku = generateEmptyPuzzle(9, 9);
     var _a = getDimensions(sudoku), row = _a[0], col = _a[1];
+    var count = 0;
     for (var i = 1; i <= depth; i++) {
-        for (var _ = 0; _ < 9; _++) {
+        while (count < 9) {
             var rowToPlace = Math.floor(Math.random() * row);
             var colToPlace = Math.floor(Math.random() * col);
+            console.log(rowToPlace, colToPlace, legalPlacement(colToPlace, rowToPlace, i), count);
             if (legalPlacement(colToPlace, rowToPlace, i)) {
                 sudoku[rowToPlace][colToPlace] = i;
+                count++;
             }
         }
     }
     return sudoku;
 }
-console.log(randomPlacer(1));
+console.log(makeGrid(randomPlacer(1)));
