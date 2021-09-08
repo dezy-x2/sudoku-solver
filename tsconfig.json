@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "lib": ["ES7", "DOM"],
+    "target": "ESNEXT", //! hate hate hate
+    "noImplicitAny": true,
+    "outDir": "./dist"
+  },
+  "exclude": ["node_modules"]
+}
