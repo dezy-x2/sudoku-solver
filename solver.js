@@ -85,7 +85,8 @@ function getRowAndCol(col, row, sudoku) {
  * @returns {boolean} it returns true if the num is in the arr
  */
 function numPresent(arr, num) {
-    return arr.includes(num);
+    //! i still don't know why this won't work ive tried the tsconfig and it still doesn't work
+    //// return arr.includes(num);
     for (var _i = 0, arr_1 = arr; _i < arr_1.length; _i++) {
         var elm = arr_1[_i];
         if (elm === num) {
@@ -106,15 +107,16 @@ function legalPlacement(col, row, num, sudoku) {
     var grids = makeGrid(sudoku);
     var coord = findCoord(col, row);
     var grid = grids[coord];
-    return (!numPresent(fullCol, num) &&
-        !numPresent(fullRow, num) &&
-        !numPresent(grid, num));
+    return (numPresent(fullCol, num) &&
+        numPresent(fullRow, num) &&
+        numPresent(grid, num) &&
+        sudoku[row][col] !== null);
 }
-function generateEmptyPuzzle(col, row) {
+function generateEmptyPuzzle(colCount, rowCount) {
     var final = [];
-    for (var i = 0; i < row; i++) {
+    for (var i = 0; i < rowCount; i++) {
         var temp = [];
-        for (var j = 0; j < col; j++) {
+        for (var j = 0; j < colCount; j++) {
             temp.push(null);
         }
         final.push(temp);
@@ -130,7 +132,7 @@ function randomPlacer(depth) {
         while (count < 9) {
             var rowToPlace = Math.floor(Math.random() * row);
             var colToPlace = Math.floor(Math.random() * col);
-            console.log(rowToPlace, colToPlace, legalPlacement(colToPlace, rowToPlace, i), count);
+            console.log(rowToPlace, colToPlace, legalPlacement(colToPlace, rowToPlace, i), count, sudoku[rowToPlace][colToPlace]);
             if (legalPlacement(colToPlace, rowToPlace, i)) {
                 sudoku[rowToPlace][colToPlace] = i;
                 count++;
@@ -140,3 +142,4 @@ function randomPlacer(depth) {
     return sudoku;
 }
 console.log(makeGrid(randomPlacer(1)));
+// console.log(makeGrid(generateEmptyPuzzle(9, 9)));

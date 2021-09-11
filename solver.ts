@@ -98,7 +98,8 @@ function getRowAndCol(
  * @returns {boolean} it returns true if the num is in the arr
  */
 function numPresent(arr: number[], num: number): boolean {
-  return arr.includes(num);
+  //! i still don't know why this won't work ive tried the tsconfig and it still doesn't work
+  //// return arr.includes(num);
   for (let elm of arr) {
     if (elm === num) {
       return true;
@@ -126,15 +127,16 @@ function legalPlacement(
   return (
     !numPresent(fullCol, num) &&
     !numPresent(fullRow, num) &&
-    !numPresent(grid, num)
+    !numPresent(grid, num) &&
+    sudoku[row][col] === null
   );
 }
 
-function generateEmptyPuzzle(col: number, row: number): number[][] {
+function generateEmptyPuzzle(colCount: number, rowCount: number): number[][] {
   const final = [];
-  for (let i = 0; i < row; i++) {
+  for (let i = 0; i < rowCount; i++) {
     const temp = [];
-    for (let j = 0; j < col; j++) {
+    for (let j = 0; j < colCount; j++) {
       temp.push(null);
     }
     final.push(temp);
@@ -154,7 +156,8 @@ function randomPlacer(depth: number): number[][] {
         rowToPlace,
         colToPlace,
         legalPlacement(colToPlace, rowToPlace, i),
-        count
+        count,
+        sudoku[rowToPlace][colToPlace]
       );
       if (legalPlacement(colToPlace, rowToPlace, i)) {
         sudoku[rowToPlace][colToPlace] = i;
@@ -166,3 +169,4 @@ function randomPlacer(depth: number): number[][] {
 }
 
 console.log(makeGrid(randomPlacer(1)));
+// console.log(makeGrid(generateEmptyPuzzle(9, 9)));

@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
-    "lib": ["ES7", "DOM"],
-    "target": "ESNEXT", //! hate hate hate
-    "noImplicitAny": true,
-    "outDir": "./dist"
+    "lib": ["es2016", "dom"],
+    // "target": "ES6", //! hate hate hate
+    "module": "es6",
+    "target": "es6",
+    "noImplicitAny": true
   },
   "exclude": ["node_modules"]
 }
