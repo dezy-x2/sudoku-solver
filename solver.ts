@@ -132,6 +132,11 @@ function legalPlacement(
   );
 }
 
+/**
+ * @param {number} colCount number of items in the col
+ * @param {number} rowCount number of items in the row
+ * @returns {number[]} it returns 2d arr will null values
+ */
 function generateEmptyPuzzle(colCount: number, rowCount: number): number[][] {
   const final = [];
   for (let i = 0; i < rowCount; i++) {
@@ -143,22 +148,25 @@ function generateEmptyPuzzle(colCount: number, rowCount: number): number[][] {
   }
   return final;
 }
-//! theres definitely some errors here but im tired
+
+/**
+ *
+ * @param depth the amount of numbers you want to put in the puzzle (1-9)
+ * @returns a puzzle with the amount of numbers you want
+ */
 function randomPlacer(depth: number): number[][] {
+  // creates the puzzle that we will be populating
   const sudoku: number[][] = generateEmptyPuzzle(9, 9);
   const [row, col] = getDimensions(sudoku);
   let count: number = 0;
+  // i is the the number that we are trying to place in the sudoku
   for (let i: number = 1; i <= depth; i++) {
+    // keep trying to place i until it has been placed 9 times
     while (count < 9) {
+      // generate a random row and column
       const rowToPlace: number = Math.floor(Math.random() * row);
       const colToPlace: number = Math.floor(Math.random() * col);
-      console.log(
-        rowToPlace,
-        colToPlace,
-        legalPlacement(colToPlace, rowToPlace, i, sudoku),
-        count,
-        sudoku[rowToPlace][colToPlace]
-      );
+      // we need to check if it is legal to place the number here
       if (legalPlacement(colToPlace, rowToPlace, i, sudoku)) {
         sudoku[rowToPlace][colToPlace] = i;
         count++;
