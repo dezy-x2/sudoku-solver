@@ -75,8 +75,8 @@ function findCoord(col, row, sudoku) {
  */
 function getRowAndCol(col, row, sudoku) {
     if (sudoku === void 0) { sudoku = puzzle; }
-    var fullRow = puzzle[row];
-    var fullCol = puzzle.map(function (arr) { return arr[col]; });
+    var fullRow = sudoku[row];
+    var fullCol = sudoku.map(function (arr) { return arr[col]; });
     return [fullCol, fullRow];
 }
 /**
@@ -103,14 +103,14 @@ function numPresent(arr, num) {
  */
 function legalPlacement(col, row, num, sudoku) {
     if (sudoku === void 0) { sudoku = puzzle; }
-    var _a = getRowAndCol(col, row), fullCol = _a[0], fullRow = _a[1];
+    var _a = getRowAndCol(col, row, sudoku), fullCol = _a[0], fullRow = _a[1];
     var grids = makeGrid(sudoku);
     var coord = findCoord(col, row);
     var grid = grids[coord];
-    return (numPresent(fullCol, num) &&
-        numPresent(fullRow, num) &&
-        numPresent(grid, num) &&
-        sudoku[row][col] !== null);
+    return (!numPresent(fullCol, num) &&
+        !numPresent(fullRow, num) &&
+        !numPresent(grid, num) &&
+        sudoku[row][col] === null);
 }
 function generateEmptyPuzzle(colCount, rowCount) {
     var final = [];
@@ -132,8 +132,8 @@ function randomPlacer(depth) {
         while (count < 9) {
             var rowToPlace = Math.floor(Math.random() * row);
             var colToPlace = Math.floor(Math.random() * col);
-            console.log(rowToPlace, colToPlace, legalPlacement(colToPlace, rowToPlace, i), count, sudoku[rowToPlace][colToPlace]);
-            if (legalPlacement(colToPlace, rowToPlace, i)) {
+            console.log(rowToPlace, colToPlace, legalPlacement(colToPlace, rowToPlace, i, sudoku), count, sudoku[rowToPlace][colToPlace]);
+            if (legalPlacement(colToPlace, rowToPlace, i, sudoku)) {
                 sudoku[rowToPlace][colToPlace] = i;
                 count++;
             }

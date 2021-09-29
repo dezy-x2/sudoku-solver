@@ -87,8 +87,8 @@ function getRowAndCol(
   row: number,
   sudoku: number[][] = puzzle
 ): number[][] {
-  const fullRow = puzzle[row];
-  const fullCol = puzzle.map((arr) => arr[col]);
+  const fullRow = sudoku[row];
+  const fullCol = sudoku.map((arr) => arr[col]);
   return [fullCol, fullRow];
 }
 
@@ -120,7 +120,7 @@ function legalPlacement(
   num: number,
   sudoku: number[][] = puzzle
 ): boolean {
-  const [fullCol, fullRow] = getRowAndCol(col, row);
+  const [fullCol, fullRow] = getRowAndCol(col, row, sudoku);
   const grids: GridObj = makeGrid(sudoku);
   const coord: number = findCoord(col, row);
   const grid: number[] = grids[coord];
@@ -155,11 +155,11 @@ function randomPlacer(depth: number): number[][] {
       console.log(
         rowToPlace,
         colToPlace,
-        legalPlacement(colToPlace, rowToPlace, i),
+        legalPlacement(colToPlace, rowToPlace, i, sudoku),
         count,
         sudoku[rowToPlace][colToPlace]
       );
-      if (legalPlacement(colToPlace, rowToPlace, i)) {
+      if (legalPlacement(colToPlace, rowToPlace, i, sudoku)) {
         sudoku[rowToPlace][colToPlace] = i;
         count++;
       }
