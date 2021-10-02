@@ -134,28 +134,63 @@ function generateEmptyPuzzle(colCount, rowCount) {
  * @returns a puzzle with the amount of numbers you want
  */
 function randomPlacer(depth) {
-    // creates the puzzle that we will be populating
-    var sudoku = generateEmptyPuzzle(9, 9);
-    var _a = getDimensions(sudoku), row = _a[0], col = _a[1];
-    var count = 0;
-    // i is the the number that we are trying to place in the sudoku
-    for (var i = 1; i <= depth; i++) {
-        // keep trying to place i until it has been placed 9 times
-        while (count < 9) {
-            // generate a random row and column
-            var rowToPlace = Math.floor(Math.random() * row);
-            var colToPlace = Math.floor(Math.random() * col);
-            console.log(legalPlacement(colToPlace, rowToPlace, i, sudoku), i, count, rowToPlace, colToPlace, sudoku);
-            // we need to check if it is legal to place the number here
-            if (legalPlacement(colToPlace, rowToPlace, i, sudoku)) {
-                sudoku[rowToPlace][colToPlace] = i;
-                count++;
+    var failCount = 0;
+    var failed = false;
+    var finalSudoku;
+    while (true) {
+        failed = false;
+        var uniquePairArr = new Set();
+        // creates the puzzle that we will be populating
+        var sudoku = generateEmptyPuzzle(9, 9);
+        var _a = getDimensions(sudoku), row = _a[0], col = _a[1];
+        var count = 0;
+        // i is the the number that we are trying to place in the sudoku
+        for (var i = 1; i <= depth; i++) {
+            // keep trying to place i until it has been placed 9 times
+            while (count < 9) {
+                // generate a random row and column
+                var rowToPlace = Math.floor(Math.random() * row);
+                var colToPlace = Math.floor(Math.random() * col);
+                // console.log(
+                //   legalPlacement(colToPlace, rowToPlace, i, sudoku),
+                //   i,
+                //   count,
+                //   rowToPlace,
+                //   colToPlace,
+                //   uniquePairArr.size === 81
+                // );
+                uniquePairArr.add(makeUniquePair([rowToPlace, colToPlace]));
+                // we need to check if it is legal to place the number here
+                if (legalPlacement(colToPlace, rowToPlace, i, sudoku)) {
+                    sudoku[rowToPlace][colToPlace] = i;
+                    count++;
+                }
+                else if (isIllegalBoard(uniquePairArr)) {
+                    failCount++;
+                    console.log("FAIL #" + failCount);
+                    failed = true;
+                    break;
+                }
+            }
+            uniquePairArr = new Set();
+            count = 0;
+            if (failed) {
+                break;
             }
         }
-        count = 0;
+        if (!failed) {
+            finalSudoku = sudoku;
+            break;
+        }
     }
-    return sudoku;
+    return finalSudoku;
 }
-console.log("hi");
+function makeUniquePair(_a) {
+    var a = _a[0], b = _a[1];
+    return a + b * 10;
+}
+function isIllegalBoard(arr) {
+    return arr.size === 81;
+}
 console.log(makeGrid(randomPlacer(9)));
 // console.log(makeGrid(generateEmptyPuzzle(9, 9)));
