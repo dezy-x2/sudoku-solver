@@ -166,15 +166,28 @@ function randomPlacer(depth: number): number[][] {
       // generate a random row and column
       const rowToPlace: number = Math.floor(Math.random() * row);
       const colToPlace: number = Math.floor(Math.random() * col);
+      console.log(
+        legalPlacement(colToPlace, rowToPlace, i, sudoku),
+        i,
+        count,
+        rowToPlace,
+        colToPlace,
+        sudoku
+      );
       // we need to check if it is legal to place the number here
       if (legalPlacement(colToPlace, rowToPlace, i, sudoku)) {
         sudoku[rowToPlace][colToPlace] = i;
         count++;
       }
     }
+    count = 0;
   }
   return sudoku;
 }
 
-console.log(makeGrid(randomPlacer(1)));
+function makeUniquePair([a, b]: [a: number, b: number]): number {
+  return a + b * 10;
+}
+
+console.log(makeGrid(randomPlacer(9)));
 // console.log(makeGrid(generateEmptyPuzzle(9, 9)));
