@@ -155,14 +155,19 @@ function generateEmptyPuzzle(colCount: number, rowCount: number): number[][] {
  * @returns a puzzle with the amount of numbers you want
  */
 function randomPlacer(depth: number): number[][] {
+  // this is just to keep track of fails not actually important
   let failCount: number = 0;
+  // we need this to know whether to break or not
   let failed: boolean = false;
-  let finalSudoku: number[][];
+  let sudoku: number[][];
+  // this loop is here in place of recursion because the recursion would be too deep
   while (true) {
+    // need to make sure that it is false before we start
     failed = false;
+    // the set makes sure that we don't repeat any numbers
     let uniquePairArr: any = new Set();
     // creates the puzzle that we will be populating
-    const sudoku: number[][] = generateEmptyPuzzle(9, 9);
+    sudoku = generateEmptyPuzzle(9, 9);
     const [row, col] = getDimensions(sudoku);
     let count: number = 0;
     // i is the the number that we are trying to place in the sudoku
@@ -172,14 +177,7 @@ function randomPlacer(depth: number): number[][] {
         // generate a random row and column
         const rowToPlace: number = Math.floor(Math.random() * row);
         const colToPlace: number = Math.floor(Math.random() * col);
-        // console.log(
-        //   legalPlacement(colToPlace, rowToPlace, i, sudoku),
-        //   i,
-        //   count,
-        //   rowToPlace,
-        //   colToPlace,
-        //   uniquePairArr.size === 81
-        // );
+        // add the row and column to the set
         uniquePairArr.add(makeUniquePair([rowToPlace, colToPlace]));
         // we need to check if it is legal to place the number here
         if (legalPlacement(colToPlace, rowToPlace, i, sudoku)) {
@@ -188,22 +186,25 @@ function randomPlacer(depth: number): number[][] {
         } else if (isIllegalBoard(uniquePairArr)) {
           failCount++;
           console.log(`FAIL #${failCount}`);
+          // since it failed we need to mark it as failed so it exits properly
           failed = true;
           break;
         }
       }
+      // resets old values
       uniquePairArr = new Set();
       count = 0;
+      // if it failed we need to completely reset the puzzle
       if (failed) {
         break;
       }
     }
+    // if it is here and hasn't failed that means it was completed
     if (!failed) {
-      finalSudoku = sudoku;
       break;
     }
   }
-  return finalSudoku;
+  return sudoku;
 }
 
 function makeUniquePair([a, b]: [a: number, b: number]): number {
@@ -214,5 +215,16 @@ function isIllegalBoard(arr: any): boolean {
   return arr.size === 81;
 }
 
-console.log(makeGrid(randomPlacer(9)));
-// console.log(makeGrid(generateEmptyPuzzle(9, 9)));
+function puzzlefy(sudoku: number[][], numEliminated: number = 9): number[][] {
+  const [row, col] = getDimensions(sudoku);
+  for (let i = 0; i < numEliminated; i++) {
+    const rowToPlace: number = Math.floor(Math.random() * row);
+    const colToPlace: number = Math.floor(Math.random() * col);
+    sudoku[rowToPlace][colToPlace] = null;
+  }
+  return sudoku;
+}
+
+const generatedPuzzle: number[][] = randomPlacer(9);
+console.log(makeGrid(generatedPuzzle));
+console.log(makeGrid(puzzlefy(generatedPuzzle)));
