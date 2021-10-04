@@ -203,6 +203,29 @@ function puzzlefy(sudoku, numEliminated) {
     }
     return sudoku;
 }
-var generatedPuzzle = randomPlacer(9);
-console.log(makeGrid(generatedPuzzle));
-console.log(makeGrid(puzzlefy(generatedPuzzle)));
+function getNumberCount(sudoku) {
+    var countObj = {
+        "1": 9,
+        "2": 9,
+        "3": 9,
+        "4": 9,
+        "5": 9,
+        "6": 9,
+        "7": 9,
+        "8": 9,
+        "9": 9
+    };
+    for (var i = 0; i < sudoku.length; i++) {
+        for (var j = 0; j < sudoku[i].length; j++) {
+            if (sudoku[i][j] !== null) {
+                var currNum = sudoku[i][j];
+                countObj[currNum]--;
+            }
+        }
+    }
+    return countObj;
+}
+// const generatedPuzzle: number[][] = randomPlacer(9);
+// console.log(makeGrid(generatedPuzzle));
+// console.log(makeGrid(puzzlefy(generatedPuzzle)));
+console.log(getNumberCount(puzzle));

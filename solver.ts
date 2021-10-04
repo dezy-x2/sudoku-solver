@@ -225,6 +225,30 @@ function puzzlefy(sudoku: number[][], numEliminated: number = 9): number[][] {
   return sudoku;
 }
 
-const generatedPuzzle: number[][] = randomPlacer(9);
-console.log(makeGrid(generatedPuzzle));
-console.log(makeGrid(puzzlefy(generatedPuzzle)));
+function getNumberCount(sudoku: number[][]): { [key: number]: number } {
+  let countObj: { [key: number]: number } = {
+    "1": 9,
+    "2": 9,
+    "3": 9,
+    "4": 9,
+    "5": 9,
+    "6": 9,
+    "7": 9,
+    "8": 9,
+    "9": 9,
+  };
+  for (let i = 0; i < sudoku.length; i++) {
+    for (let j = 0; j < sudoku[i].length; j++) {
+      if (sudoku[i][j] !== null) {
+        let currNum = sudoku[i][j];
+        countObj[currNum]--;
+      }
+    }
+  }
+  return countObj;
+}
+
+// const generatedPuzzle: number[][] = randomPlacer(9);
+// console.log(makeGrid(generatedPuzzle));
+// console.log(makeGrid(puzzlefy(generatedPuzzle)));
+console.log(getNumberCount(puzzle));
