@@ -1,3 +1,8 @@
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
+};
 var puzzle = [
     [9, null, null, 6, 4, null, null, null, 3],
     [2, 7, null, null, 9, null, 5, 8, null],
@@ -225,7 +230,46 @@ function getNumberCount(sudoku) {
     }
     return countObj;
 }
+function solvePuzzle(sudoku) {
+    var failCount = 0;
+    var failed = false;
+    var sudokuCopy;
+    while (true) {
+        sudokuCopy = __spreadArray([], sudoku);
+        var numberCount = getNumberCount(puzzle);
+        var uniquePairArr = new Set();
+        var _a = getDimensions(sudokuCopy), row = _a[0], col = _a[1];
+        var count = 0;
+        for (var i = 1; i <= 9; i++) {
+            while (count < numberCount[i]) {
+                var rowToPlace = Math.floor(Math.random() * row);
+                var colToPlace = Math.floor(Math.random() * col);
+                uniquePairArr.add(makeUniquePair([rowToPlace, colToPlace]));
+                if (legalPlacement(colToPlace, rowToPlace, i, sudokuCopy)) {
+                    sudokuCopy[rowToPlace][colToPlace] = i;
+                    count++;
+                }
+                else if (isIllegalBoard(uniquePairArr)) {
+                    failCount++;
+                    console.log("FAIL #" + failCount);
+                    failed = true;
+                    break;
+                }
+            }
+            uniquePairArr = new Set();
+            count = 0;
+            if (failed) {
+                break;
+            }
+        }
+        if (!failed) {
+            break;
+        }
+    }
+    return sudokuCopy;
+}
 // const generatedPuzzle: number[][] = randomPlacer(9);
 // console.log(makeGrid(generatedPuzzle));
 // console.log(makeGrid(puzzlefy(generatedPuzzle)));
-console.log(getNumberCount(puzzle));
+// console.log(getNumberCount(puzzle));
+console.log(makeGrid(solvePuzzle(generateEmptyPuzzle(9, 9))));

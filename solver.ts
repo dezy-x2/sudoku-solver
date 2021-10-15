@@ -248,7 +248,47 @@ function getNumberCount(sudoku: number[][]): { [key: number]: number } {
   return countObj;
 }
 
+function solvePuzzle(sudoku: number[][]): any {
+  let failCount: number = 0;
+  let failed: boolean = false;
+  let sudokuCopy: number[][];
+  while (true) {
+    sudokuCopy = [...sudoku];
+    const numberCount: { [key: number]: number } = getNumberCount(puzzle);
+    let uniquePairArr: any = new Set();
+    const [row, col] = getDimensions(sudokuCopy);
+    let count: number = 0;
+    for (let i: number = 1; i <= 9; i++) {
+      while (count < numberCount[i]) {
+        const rowToPlace: number = Math.floor(Math.random() * row);
+        const colToPlace: number = Math.floor(Math.random() * col);
+        uniquePairArr.add(makeUniquePair([rowToPlace, colToPlace]));
+        if (legalPlacement(colToPlace, rowToPlace, i, sudokuCopy)) {
+          sudokuCopy[rowToPlace][colToPlace] = i;
+          count++;
+        } else if (isIllegalBoard(uniquePairArr)) {
+          failCount++;
+          console.log(`FAIL #${failCount}`);
+          failed = true;
+          break;
+        }
+      }
+      uniquePairArr = new Set();
+      count = 0;
+      if (failed) {
+        break;
+      }
+    }
+    if (!failed) {
+      break;
+    }
+  }
+  return sudokuCopy;
+}
+
 // const generatedPuzzle: number[][] = randomPlacer(9);
 // console.log(makeGrid(generatedPuzzle));
 // console.log(makeGrid(puzzlefy(generatedPuzzle)));
-console.log(getNumberCount(puzzle));
+// console.log(getNumberCount(puzzle));
+
+console.log(makeGrid(solvePuzzle(generateEmptyPuzzle(9, 9))));
