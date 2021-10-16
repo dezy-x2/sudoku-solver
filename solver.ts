@@ -276,6 +276,7 @@ function solvePuzzle(sudoku: number[][]): any {
       uniquePairArr = new Set();
       count = 0;
       if (failed) {
+        console.log(sudokuCopy);
         break;
       }
     }
@@ -291,4 +292,4 @@ function solvePuzzle(sudoku: number[][]): any {
 // console.log(makeGrid(puzzlefy(generatedPuzzle)));
 // console.log(getNumberCount(puzzle));
 
-console.log(makeGrid(solvePuzzle(generateEmptyPuzzle(9, 9))));
+console.log(makeGrid(solvePuzzle(puzzle)));
