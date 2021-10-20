@@ -231,21 +231,34 @@ function getNumberCount(sudoku) {
     return countObj;
 }
 function solvePuzzle(sudoku) {
+    // this is just to keep track of fails not actually important
     var failCount = 0;
+    // we need this to know whether to break or not
     var failed = false;
+    // we need to manipulate a copy of the puzzle so we can still restart cleanly
     var sudokuCopy;
+    // this loop is here in place of recursion because the recursion would be too deep
     while (true) {
+        // need to make sure that it is false before we start
         failed = false;
+        // we need to make sure that we copy the puzzle on both layers
         sudokuCopy = sudoku.map(function (arr) { return __spreadArray([], arr); });
+        // we need to know how many of each number is left to solve
         var numberCount = getNumberCount(sudokuCopy);
+        // the set makes sure that we don't repeat any numbers
         var uniquePairArr = new Set();
         var _a = getDimensions(sudokuCopy), row = _a[0], col = _a[1];
         var count = 0;
+        // i is the the number that we are trying to place in the sudoku
         for (var i = 1; i <= 9; i++) {
+            // keep trying to place i until it has been placed the amount of times it is missing
             while (count < numberCount[i]) {
+                // generate a random row and column
                 var rowToPlace = Math.floor(Math.random() * row);
                 var colToPlace = Math.floor(Math.random() * col);
+                // add the row and column to the set
                 uniquePairArr.add(makeUniquePair([rowToPlace, colToPlace]));
+                // we need to check if it is legal to place the number here
                 if (legalPlacement(colToPlace, rowToPlace, i, sudokuCopy)) {
                     sudokuCopy[rowToPlace][colToPlace] = i;
                     count++;
@@ -253,16 +266,20 @@ function solvePuzzle(sudoku) {
                 else if (isIllegalBoard(uniquePairArr)) {
                     failCount++;
                     console.log("FAIL #" + failCount);
+                    // since it failed we need to mark it as failed so it exits properly
                     failed = true;
                     break;
                 }
             }
+            // resets old values
             uniquePairArr = new Set();
             count = 0;
+            // if it failed we need to completely reset the puzzle
             if (failed) {
                 break;
             }
         }
+        // if it is here and hasn't failed that means it was completed
         if (!failed) {
             break;
         }
