@@ -90,8 +90,6 @@ function getRowAndCol(col, row, sudoku) {
  * @returns {boolean} it returns true if the num is in the arr
  */
 function numPresent(arr, num) {
-    //! i still don't know why this won't work ive tried the tsconfig and it still doesn't work
-    //// return arr.includes(num);
     for (var _i = 0, arr_1 = arr; _i < arr_1.length; _i++) {
         var elm = arr_1[_i];
         if (elm === num) {
@@ -204,11 +202,13 @@ function puzzlefy(sudoku, numEliminated) {
     for (var i = 0; i < numEliminated; i++) {
         var rowToPlace = Math.floor(Math.random() * row);
         var colToPlace = Math.floor(Math.random() * col);
+        // randomly picks a number and nullifys it
         sudoku[rowToPlace][colToPlace] = null;
     }
     return sudoku;
 }
 function getNumberCount(sudoku) {
+    // our values start at 9 so we can subtract from them and find out how many are less rather than how many there are
     var countObj = {
         "1": 9,
         "2": 9,
@@ -223,6 +223,7 @@ function getNumberCount(sudoku) {
     for (var i = 0; i < sudoku.length; i++) {
         for (var j = 0; j < sudoku[i].length; j++) {
             if (sudoku[i][j] !== null) {
+                // if its not null then we need to subtract 1 from that specific numbers count
                 var currNum = sudoku[i][j];
                 countObj[currNum] -= 1;
             }
