@@ -224,7 +224,7 @@ function getNumberCount(sudoku) {
         for (var j = 0; j < sudoku[i].length; j++) {
             if (sudoku[i][j] !== null) {
                 var currNum = sudoku[i][j];
-                countObj[currNum]--;
+                countObj[currNum] -= 1;
             }
         }
     }
@@ -235,8 +235,9 @@ function solvePuzzle(sudoku) {
     var failed = false;
     var sudokuCopy;
     while (true) {
-        sudokuCopy = __spreadArray([], sudoku);
-        var numberCount = getNumberCount(puzzle);
+        failed = false;
+        sudokuCopy = sudoku.map(function (arr) { return __spreadArray([], arr); });
+        var numberCount = getNumberCount(sudokuCopy);
         var uniquePairArr = new Set();
         var _a = getDimensions(sudokuCopy), row = _a[0], col = _a[1];
         var count = 0;
@@ -259,7 +260,6 @@ function solvePuzzle(sudoku) {
             uniquePairArr = new Set();
             count = 0;
             if (failed) {
-                console.log(sudokuCopy);
                 break;
             }
         }

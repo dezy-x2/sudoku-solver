@@ -241,7 +241,7 @@ function getNumberCount(sudoku: number[][]): { [key: number]: number } {
     for (let j = 0; j < sudoku[i].length; j++) {
       if (sudoku[i][j] !== null) {
         let currNum = sudoku[i][j];
-        countObj[currNum]--;
+        countObj[currNum] -= 1;
       }
     }
   }
@@ -253,8 +253,9 @@ function solvePuzzle(sudoku: number[][]): any {
   let failed: boolean = false;
   let sudokuCopy: number[][];
   while (true) {
-    sudokuCopy = [...sudoku];
-    const numberCount: { [key: number]: number } = getNumberCount(puzzle);
+    failed = false;
+    sudokuCopy = sudoku.map((arr) => [...arr]);
+    let numberCount: { [key: number]: number } = getNumberCount(sudokuCopy);
     let uniquePairArr: any = new Set();
     const [row, col] = getDimensions(sudokuCopy);
     let count: number = 0;
@@ -276,7 +277,6 @@ function solvePuzzle(sudoku: number[][]): any {
       uniquePairArr = new Set();
       count = 0;
       if (failed) {
-        console.log(sudokuCopy);
         break;
       }
     }
